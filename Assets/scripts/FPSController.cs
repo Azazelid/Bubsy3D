@@ -11,6 +11,8 @@ public class FPSController : MonoBehaviour
 
     float xRotation = 0f;
     float yVelocity;
+    public Transform respawn;
+    public float jumpHeight;
 
     void Start()
     {
@@ -48,12 +50,20 @@ public class FPSController : MonoBehaviour
 
         // Gravedad
         if (controller.isGrounded)
+        {
             yVelocity = -1f;
+            if (Input.GetButtonDown("Jump"))
+            {
+                yVelocity= Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+        }
         else
             yVelocity += gravity * Time.deltaTime;
 
         Vector3 move = direction * speed + Vector3.up * yVelocity;
 
         controller.Move(move * Time.deltaTime);
+
+        if(transform.position.y<-10f) transform.position=respawn.position;
     }
 }

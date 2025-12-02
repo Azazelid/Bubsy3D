@@ -5,6 +5,7 @@ public class RaycastShoot : MonoBehaviour
     public Camera cam;     
     public float range = 100f;
     public GameObject hitEffect;
+    public float shootDmg=20f;
 
     void Update()
     {

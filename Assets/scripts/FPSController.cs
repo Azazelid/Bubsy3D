@@ -12,7 +12,7 @@ public class FPSController : MonoBehaviour
     float xRotation = 0f;
     float yVelocity;
     public Transform respawn;
-    public float jumpHeight;
+    public float jumpHeight ;
 
     void Start()
     {

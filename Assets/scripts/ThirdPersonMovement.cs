@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
+    
+    public Animator PlayerAnim;
     public CharacterController controller;
     public Transform cam; // Referencia a la cámara del player
     public float speed = 5f;
     public float turnSpeed = 10f;
     public float gravity = -9.81f;
+    public float jumpHeight = 2f;
 
     float yVelocity;
 
@@ -19,6 +22,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (inputDirection.magnitude >= 0.1f)
         {
+            PlayerAnim.SetBool("iswalk",true);
             // Ángulo relativo a la cámara
             float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg
                                 + cam.eulerAngles.y;
@@ -32,14 +36,26 @@ public class ThirdPersonMovement : MonoBehaviour
 
             // Gravedad básica
             if (controller.isGrounded)
+            {
                 yVelocity = -1f;
+                // Saltar
+            if (Input.GetButtonDown("Jump"))
+                {
+                // Fórmula física: v = sqrt(altura * -2 * gravedad)
+                yVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                PlayerAnim.SetTrigger("jump");
+                }
+            }
             else
+            {
                 yVelocity += gravity * Time.deltaTime;
+            } 
 
             controller.Move((moveDir * speed + Vector3.up * yVelocity) * Time.deltaTime);
         }
         else
         {
+            PlayerAnim.SetBool("iswalk",false);
             // Aplicar gravedad aunque no haya input
             if (controller.isGrounded)
                 yVelocity = -1f;

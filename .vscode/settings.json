@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "Bubsy3D.slnx"
+    "dotnet.defaultSolution": "gershdevice.slnx"
 }
